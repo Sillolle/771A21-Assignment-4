@@ -21,7 +21,7 @@ end
 GRAPHICS-WINDOW
 12
 10
-830
+350
 429
 -1
 -1
@@ -35,8 +35,8 @@ GRAPHICS-WINDOW
 1
 1
 1
--40
-40
+-16
+16
 -20
 20
 0
@@ -46,10 +46,10 @@ ticks
 30.0
 
 SLIDER
-835
-12
-1007
-45
+1003
+14
+1175
+47
 number_of_turtles
 number_of_turtles
 0
@@ -61,10 +61,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-836
-118
-900
-151
+1004
+120
+1068
+153
 Setup
 setup
 NIL
@@ -78,10 +78,10 @@ NIL
 1
 
 SLIDER
-835
-50
-1007
-83
+1003
+52
+1175
+85
 amount_of_food
 amount_of_food
 0
