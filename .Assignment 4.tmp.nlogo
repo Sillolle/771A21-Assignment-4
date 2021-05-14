@@ -1,34 +1,47 @@
 breed[foods food]
+breed[agents2 agent2]
 
 globals[]
-turtles-own[agression_level]
+
+turtles-own[
+  aggression_level
+  energy
+]
+
 patches-own[]
 
 to setup
   ca
-  create_turtles
+  create_agents
   create_food
 end
 
-to create_turtles
-  ask n-of number_of_turtles patches [sprout 1]
-  ask turtles [set shape "turtle"
+to create_agents
+  ask n-of number_of_agents patches [sprout 1]
+  ask turtles [set breed agents2
+               set shape "turtle"
                set size 3
-               set color blue]
-  ask n-of (percentage_of_afgressive / 100 * count turtles) turtles [set color red
-                                                                    set agression_level random 50 + 50] ;agressive turtles have a range of 50-100
-  ask turtles with [color = blue] [set agression_level random 50] ;non-agressive turtles have a range of 0-50
+               set color blue
+               set energy random 95 + 5] ;turtles have a random amount of energy between 5-100 to begin with
+
+  ask n-of (percentage_of_aggressive / 100 * count turtles) turtles [set color red
+                                                                     set aggression_level random 50 + 50] ;agressive turtles have a range of 50-100
+  ask agents2 with [color = blue] [set aggression_level random 50] ;non-agressive turtles have a range of 0-50
 end
 
 to create_food
-  ask n-of amount_of_food patches with [(not any? other turtles-here)] [sprout-foods 1]
+  ask n-of amount_of_food patches with [(not any? other turtles-here)] [sprout-foods 1] ;patches without turtles currently on them sprout food
   ask foods [set shape "circle"
              set color yellow]
 
 end
 
 to go
-
+  ask agents2[
+    fd 1
+    lt random 360
+  ]
+  plot count agents2 with [color = red]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -63,8 +76,8 @@ SLIDER
 12
 1007
 45
-number_of_turtles
-number_of_turtles
+number_of_agents
+number_of_agents
 0
 100
 51.0
@@ -108,10 +121,10 @@ HORIZONTAL
 SLIDER
 835
 89
-1027
+1033
 122
-percentage_of_agressive
-percentage_of_agressive
+percentage_of_aggressive
+percentage_of_aggressive
 0
 100
 17.0
@@ -119,6 +132,41 @@ percentage_of_agressive
 1
 NIL
 HORIZONTAL
+
+PLOT
+839
+196
+1039
+346
+Number of agressive turtles 
+NIL
+NIL
+0.0
+100.0
+0.0
+100.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -5298144 true "" "plot count turtles with [color = \"red\"]"
+
+BUTTON
+909
+143
+972
+176
+Go
+go
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
