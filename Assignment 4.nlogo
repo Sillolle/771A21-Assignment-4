@@ -1,5 +1,9 @@
 breed[foods food]
 
+globals[]
+turtles-own[aggression_level]
+patches-own[]
+
 to setup
   ca
   create_turtles
@@ -9,12 +13,21 @@ end
 to create_turtles
   ask n-of number_of_turtles patches [sprout 1]
   ask turtles [set shape "turtle"
-               set size 4]
+               set size 3
+               set color blue]
+  ask n-of (percentage_of_aggressive / 100 * count turtles) turtles [set color red
+                                                                    set aggression_level random 50 + 50] ;agressive turtles have a range of 50-100
+  ask turtles with [color = blue] [set aggression_level random 50] ;non-agressive turtles have a range of 0-50
 end
 
 to create_food
-  ask n-of amount_of_food patches [sprout-foods 1]
-  ask foods [set shape "circle"]
+  ask n-of amount_of_food patches with [(not any? other turtles-here)] [sprout-foods 1]
+  ask foods [set shape "circle"
+             set color yellow]
+
+end
+
+to go
 
 end
 @#$#@#$#@
@@ -61,10 +74,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-836
-118
-900
-151
+837
+144
+901
+177
 Setup
 setup
 NIL
@@ -87,6 +100,21 @@ amount_of_food
 0
 100
 50.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+835
+89
+1033
+122
+percentage_of_aggressive
+percentage_of_aggressive
+0
+100
+17.0
 1
 1
 NIL
