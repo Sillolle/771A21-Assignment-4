@@ -12,6 +12,7 @@ patches-own[]
 
 to setup
   ca
+  reset-ticks
   create_agents
   create_food
 end
@@ -25,9 +26,9 @@ to create_agents
                set energy random 95 + 5] ;turtles have a random amount of energy between 5-100 to begin with
 
   ask n-of (percentage_of_aggressive / 100 * count turtles) turtles [set color red
-                                                                     set aggression_level random 50 + 50] ;agressive turtles have a range of 50-100
+                                                                     set aggression_level random 49 + 50] ;agressive turtles have a range of 51-100
 
-  ask agents2 with [color = blue] [set aggression_level random 50] ;non-agressive turtles have a range of 0-50
+  ask agents2 with [color = blue] [set aggression_level random 49 + 1] ;non-agressive turtles have a range of 1-50
 end
 
 to create_food
