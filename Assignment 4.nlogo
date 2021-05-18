@@ -5,6 +5,7 @@ globals[ ]
 
 turtles-own[
   aggression_level
+  aggression_type
   energy
 ]
 
@@ -22,13 +23,17 @@ to create_agents
   ask turtles [set breed agents2
                set shape "turtle"
                set size 3
-               set color blue
                set energy random 95 + 5] ;turtles have a random amount of energy between 5-100 to begin with
 
-  ask n-of (percentage_of_aggressive / 100 * count turtles) turtles [set color red
-                                                                     set aggression_level random 49 + 50] ;agressive turtles have a range of 51-100
+  ask n-of (((100 - percentage_of_aggressive) / 100) * count turtles) turtles [set aggression_level random 49 + 1
+    set aggression_type "Non-aggressive"]
+    ;set color (105 + (aggression_level / 20))]
 
-  ask agents2 with [color = blue] [set aggression_level random 49 + 1] ;non-agressive turtles have a range of 1-50
+  ask n-of (percentage_of_aggressive / 100 * count turtles) turtles with [aggression_type != "Non-aggressive"] [set aggression_level random 49 + 50
+      set aggression_type "Aggressive"]
+     ;set color (15 - (aggression_level / 30))] ;agressive turtles have a range of 51-100
+
+  ask agents2 [set color (108 + (aggression_level / 10))] ;not sure why this isn't working well
 end
 
 to create_food
@@ -195,7 +200,7 @@ percentage_of_aggressive
 percentage_of_aggressive
 0
 100
-17.0
+71.0
 1
 1
 NIL
