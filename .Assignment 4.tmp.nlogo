@@ -45,9 +45,9 @@ to go
   ]
 
   set-current-plot-pen "aggressive"
-  plot (count agents2 with [color = red] / count agents2) * 100
+  plot count agents2 with [color = red] /
   set-current-plot-pen "non-aggressive"
-  plot (count agents2 with [color = blue]  / count agents2) * 100
+  plot count agents2 with [color = blue]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
