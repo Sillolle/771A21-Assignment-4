@@ -1,7 +1,7 @@
 breed[foods food]
 breed[agents2 agent2]
 
-globals[]
+globals[ ]
 
 turtles-own[
   aggression_level
@@ -51,13 +51,14 @@ to go
 
   set-current-plot "Aggressive vs non-aggressive turtles"
   set-current-plot-pen "aggressive"
-  plot (count agents2 with [color = red] / count agents2) * 100
-  set-current-plot-pen "non-aggressive"
-  plot (count agents2 with [color = blue]  / count agents2) * 100
-
-  set-current-plot "Number of turtles"
-  set-current-plot-pen "default"
-  plot count agents2
+  if count agents2 > 0 [
+    plot (count agents2 with [color = red] / count agents2) * 100
+    set-current-plot-pen "non-aggressive"
+    plot (count agents2 with [color = blue]  / count agents2) * 100
+    set-current-plot "Number of turtles"
+    set-current-plot-pen "default"
+    plot count agents2
+  ]
 end
 
 to interact
@@ -65,10 +66,10 @@ to interact
   ask agents2[
     set foods-present count foods-here ; Count the number of foods on the patch
     if foods-present > 0[ ; Check if there is food on this turtles patch
-      if count agents2-here > 1[  ; Check if there is atleast another turtle on this patch
+      ifelse count agents2-here > 1[  ; Check if there is atleast another turtle on this patch
         fight_or_flight ; Fight other turtle (will only initiate if another turtle is present)
       ]
-      eat foods-present
+      [eat foods-present]
     ]
 
   ]
@@ -80,32 +81,16 @@ to eat [n_of_foods]
 end
 
 to fight_or_flight ;Fight or flight function ;This should work because it steps one turtle at a time, so this will happen once, not twice if two turtles are present
-  let likelihood_self_fighting [aggression_level] of self ;turtle's likelihood of fighting
-  let likelihood_other_fighting [aggression_level] of other turtles-here ;other turtle present's likelihood of fighting
-
-  let choice_self random 100 ;random number for self turtle
-  let choice_other random 100 ;random number for other turtle
-
-  let likelihood_of_fight (likelihood_self_fighting * likelihood_other_fighting)
-
-  if choice_self < likelihood_self_fighting and choice_other < likelihood_other_fighting [
-    fight] ; situation where both have chosen to stay and fight
-
-  if choice_self < likelihood_self_fighting and choice_other > likelihood_other_fighting [
-    eat count foods-here] ;self turtle gets the food
-
-  if choice_self > likelihood_self_fighting and choice_other < likelihood_other_fighting [
-    ask other agents2-here [eat count foods-here]] ;second turtle gets the food
-
-  if choice_self > likelihood_self_fighting and choice_other > likelihood_other_fighting [
-  ] ;both fly and nobody gets the food
-
-  ask turtles-here [fd 1]
+  ask turtles-here [
+    if aggression_level < random 100 [ lt random 360 fd 1 ] ; Checks if turtles flee, and if they flee, move them one patch away
+  ]
+  if count turtles-here > 1 [ fight ] ; If more than 1 agent remain, have them fight
 end
 
-to fight ;50-50 chance of both turtles winning in this base model
-  ask one-of turtles-here [die]
-  ask turtles-here [eat count foods-here]
+to fight ; 1 / number_of_turtles-here chance of winning fight for every turtle
+  let agents_to_die count turtles-here - 1 ; set the number of turtles that will die in the fight
+  ask n-of agents_to_die turtles-here [die] ; kill all but one turtle
+  ask one-of turtles-here [eat count foods-here] ; let the remaining turtle eat
 end
 
 to face-turtle
@@ -195,7 +180,7 @@ amount_of_food
 amount_of_food
 0
 100
-70.0
+100.0
 1
 1
 NIL
@@ -261,7 +246,7 @@ view_Distance
 view_Distance
 0
 10
-1.0
+6.0
 2
 1
 NIL
