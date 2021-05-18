@@ -80,7 +80,7 @@ to eat [n_of_foods]
 end
 
 to fight_or_flight ;Fight or flight function ;This should work because it steps one turtle at a time, so this will happen once, not twice if two turtles are present
-  let likelihood_self_fighting [aggression_level] of myself ;turtle's likelihood of fighting
+  let likelihood_self_fighting [aggression_level] of self ;turtle's likelihood of fighting
   let likelihood_other_fighting [aggression_level] of other turtles-here ;other turtle present's likelihood of fighting
 
   let choice_self random 100 ;random number for self turtle
@@ -95,7 +95,7 @@ to fight_or_flight ;Fight or flight function ;This should work because it steps 
     eat count foods-here] ;self turtle gets the food
 
   if choice_self > likelihood_self_fighting and choice_other < likelihood_other_fighting [
-    ask other turtles-here [eat count foods-here]] ;second turtle gets the food
+    ask other agents2-here [eat count foods-here]] ;second turtle gets the food
 
   if choice_self > likelihood_self_fighting and choice_other > likelihood_other_fighting [
   ] ;both fly and nobody gets the food
@@ -103,8 +103,9 @@ to fight_or_flight ;Fight or flight function ;This should work because it steps 
   ask turtles-here [fd 1]
 end
 
-to fight
-
+to fight ;50-50 chance of both turtles winning in this base model
+  ask one-of turtles-here [die]
+  ask turtles-here [eat count foods-here]
 end
 
 to face-turtle
@@ -194,7 +195,7 @@ amount_of_food
 amount_of_food
 0
 100
-20.0
+70.0
 1
 1
 NIL
