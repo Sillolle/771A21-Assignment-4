@@ -12,6 +12,7 @@ patches-own[]
 
 to setup
   ca
+  reset-ticks
   create_agents
   create_food
 end
@@ -25,9 +26,9 @@ to create_agents
                set energy random 95 + 5] ;turtles have a random amount of energy between 5-100 to begin with
 
   ask n-of (percentage_of_aggressive / 100 * count turtles) turtles [set color red
-                                                                     set aggression_level random 50 + 50] ;agressive turtles have a range of 50-100
+                                                                     set aggression_level random 49 + 50] ;agressive turtles have a range of 51-100
 
-  ask agents2 with [color = blue] [set aggression_level random 50] ;non-agressive turtles have a range of 0-50
+  ask agents2 with [color = blue] [set aggression_level random 49 + 1] ;non-agressive turtles have a range of 1-50
 end
 
 to create_food
@@ -39,62 +40,14 @@ end
 
 to go
   ask agents2[
-    face-turtle
-    fd 1
+    fd 2
+    lt random 360
   ]
-  interact
-  update-turtles
-  create_food
+
+  set-current-plot-pen "aggressive"
   plot count agents2 with [color = red]
-end
-
-
-
-to interact
-  let foods-present 0 ; Number of foods on the current patch
-  ask agents2[
-    set foods-present count foods-here ; Count the number of foods on the patch
-    if foods-present > 0[ ; Check if there is food on this turtles patch
-      if count agents2-here > 1[  ; Check if there is atleast another turtle on this patch
-        fight ; Fight other turtle (will only initiate if another turtle is present
-      ]
-      eat foods-present
-    ]
-
-  ]
-
-
-end
-
-
-to eat [n_of_foods]
-  set energy energy + n_of_foods * value_of_food ; Adds the number of foods eaten * 10 to the turtles energy
-  ask foods-here [ die ] ; removes the foods from the patch
-end
-
-
-to fight ; TODO: Implement fight or flight function
-
-end
-
-
-to face-turtle
-  let sight 0
-  while [sight <= view_Distance] [
-    if count foods in-radius sight > 0  [
-      set heading towards one-of foods in-radius sight stop
-    ]
-    set sight sight + 1
-  ]
-  lt random 360
-end
-
-to update-turtles
-  ask agents2 [
-    set energy energy - 1 ; Remove 10 energy from every turtle
-    if energy < 1 [ die ] ; Remove Turtles without energy
-    if energy > 100 [ set energy 50 hatch 1 ] ; Experimental breeding function, Do we want breeding?
-  ]
+  set-current-plot-pen "non-aggressive"
+  plot count agents2 with [color = blue]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -165,7 +118,7 @@ amount_of_food
 amount_of_food
 0
 100
-13.0
+50.0
 1
 1
 NIL
@@ -202,7 +155,8 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -5298144 true "" "plot count turtles with [color = \"red\"]"
+"aggressive" 1.0 0 -5298144 true "" "plot count turtles with [color = \"red\"]"
+"non-aggressive" 1.0 0 -13345367 true "" "plot count turtles with [color = \"blue\"]"
 
 BUTTON
 909
@@ -220,36 +174,6 @@ NIL
 NIL
 NIL
 1
-
-SLIDER
-1053
-27
-1226
-60
-Value_of_food
-Value_of_food
-0
-100
-100.0
-1
-1
-energy
-HORIZONTAL
-
-SLIDER
-1174
-83
-1351
-116
-view_Distance
-view_Distance
-0
-10
-2.0
-1
-1
-patches
-HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
