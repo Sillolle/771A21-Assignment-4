@@ -44,10 +44,56 @@ to go
     lt random 360
   ]
 
+  interact
+  update-turtles
+  create_food ;do we want food created at every tick?
+
   set-current-plot-pen "aggressive"
   plot (count agents2 with [color = red] / count agents2) * 100
   set-current-plot-pen "non-aggressive"
   plot (count agents2 with [color = blue]  / count agents2) * 100
+end
+
+to interact
+  let foods-present 0 ; Number of foods on the current patch
+  ask agents2[
+    set foods-present count foods-here ; Count the number of foods on the patch
+    if foods-present > 0[ ; Check if there is food on this turtles patch
+      if count agents2-here > 1[  ; Check if there is atleast another turtle on this patch
+        fight ; Fight other turtle (will only initiate if another turtle is present
+      ]
+      eat foods-present
+    ]
+
+  ]
+end
+
+to eat [n_of_foods]
+  set energy energy + n_of_foods * 10 ;(value_of_food) ; Adds the number of foods eaten * 10 to the turtles energy
+  ask foods-here [ die ] ; removes the foods from the patch
+end
+
+to fight ; TODO: Implement fight or flight function
+
+end
+
+to face-turtle
+  let sight 0
+  while [sight <= view_Distance] [
+    if count foods in-radius sight > 0  [
+      set heading towards one-of foods in-radius sight stop
+    ]
+    set sight sight + 1
+  ]
+  lt random 360
+end
+
+to update-turtles
+  ask agents2 [
+    set energy energy - 1 ; Remove 10 energy from every turtle
+    if energy < 1 [ die ] ; Remove Turtles without energy
+    if energy > 100 [ set energy 50 hatch 1 ] ; Experimental breeding function, Do we want breeding?
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -174,6 +220,21 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+1013
+11
+1185
+44
+view_Distance
+view_Distance
+0
+10
+1.0
+2
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
