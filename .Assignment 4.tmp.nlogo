@@ -87,16 +87,16 @@ to fight_or_flight ;Fight or flight function ;This should work because it steps 
 
   let likelihood_of_fight (likelihood_self_fighting * likelihood_other_fighting)
 
-  if choice_self < likelihood_self_fighting and choice_other < likelihood_other_fighting [
+  if choice_self < likelihood_o_fight and choice_other < likelihood_of_fight [
     fight] ; situation where both have chosen to stay and fight
 
-  if choice_self < likelihood_self_fighting and choice_other > likelihood_other_fighting [
+  if choice_self < likelihood_of_fight and choice_other > likelihood_of_fight [
     eat count foods-here] ;self turtle gets the food
 
-  if choice_self > likelihood_self_fighting and choice_other < likelihood_other_fighting [
+  if choice_self > likelihood_of_fight and choice_other < likelihood_of_fight [
     [other turtles-here] eat count foods-here] ;second turtle gets the food
 
-  if choice_self > likelihood_self_fighting and choice_other > likelihood_other_fighting [
+  if choice_self > likelihood_of_fight and choice_other > likelihood_of_fight [
   ] ;both fly and nobody gets the food
 
   ask turtles-here fd 1
