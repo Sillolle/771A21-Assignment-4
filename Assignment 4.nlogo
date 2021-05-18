@@ -40,8 +40,8 @@ end
 
 to go
   ask agents2[
-    fd 2
-    lt random 360
+    face-turtle
+    fd 1
   ]
 
   interact
