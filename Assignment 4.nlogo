@@ -32,7 +32,8 @@ to create_agents
 end
 
 to create_food
-  ask n-of amount_of_food patches with [(not any? other turtles-here)] [sprout-foods 1] ;patches without turtles currently on them sprout food
+  let food_required (amount_of_food - count foods)
+  ask n-of food_required patches with [(not any? other turtles-here)] [sprout-foods 1] ;patches without turtles currently on them sprout food
   ask foods [set shape "circle"
              set color yellow]
 
@@ -46,7 +47,7 @@ to go
 
   interact
   update-turtles
-  create_food ;do we want food created at every tick?
+  create_food
 
   set-current-plot "Aggressive vs non-aggressive turtles"
   set-current-plot-pen "aggressive"
@@ -94,12 +95,12 @@ to fight_or_flight ;Fight or flight function ;This should work because it steps 
     eat count foods-here] ;self turtle gets the food
 
   if choice_self > likelihood_self_fighting and choice_other < likelihood_other_fighting [
-    [other turtles-here] eat count foods-here] ;second turtle gets the food
+    ask other turtles-here [eat count foods-here]] ;second turtle gets the food
 
   if choice_self > likelihood_self_fighting and choice_other > likelihood_other_fighting [
   ] ;both fly and nobody gets the food
 
-  ask turtles-here fd 1
+  ask turtles-here [fd 1]
 end
 
 to fight
