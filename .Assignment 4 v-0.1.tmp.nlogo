@@ -58,7 +58,7 @@ to interact
       if count agents2-here > 1[  ; Check if there is atleast another turtle on this patch
         fight ; Fight other turtle (will only initiate if another turtle is present
       ]
-      eat foods-present
+      eat foods-present ;
     ]
 
   ]
