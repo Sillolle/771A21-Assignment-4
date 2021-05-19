@@ -14,8 +14,13 @@ patches-own[]
 to setup
   ca
   reset-ticks
+  recolor_bk
   create_agents
   create_food
+end
+
+to recolor_bk
+  ask patches [set pcolor 44]
 end
 
 to create_agents
@@ -27,13 +32,11 @@ to create_agents
 
   ask n-of (((100 - percentage_of_aggressive) / 100) * count turtles) turtles [set aggression_level random 49 + 1
     set aggression_type "Non-aggressive"]
-    ;set color (105 + (aggression_level / 20))]
 
   ask n-of (percentage_of_aggressive / 100 * count turtles) turtles with [aggression_type != "Non-aggressive"] [set aggression_level random 49 + 50
       set aggression_type "Aggressive"]
-     ;set color (15 - (aggression_level / 30))] ;agressive turtles have a range of 51-100
 
-  ask agents2 [set color (108 + (aggression_level / 10))] ;not sure why this isn't working well
+  ask agents2 [set color scale-color blue aggression_level 100 0]
 end
 
 to create_food
