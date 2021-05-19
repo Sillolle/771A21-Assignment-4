@@ -14,8 +14,13 @@ patches-own[]
 to setup
   ca
   reset-ticks
+  recolor_bk
   create_agents
   create_food
+end
+
+to recolor_bk
+  ask patches [set pcolor 44]
 end
 
 to create_agents
@@ -27,13 +32,11 @@ to create_agents
 
   ask n-of (((100 - percentage_of_aggressive) / 100) * count turtles) turtles [set aggression_level random 49 + 1
     set aggression_type "Non-aggressive"]
-    ;set color (105 + (aggression_level / 20))]
 
   ask n-of (percentage_of_aggressive / 100 * count turtles) turtles with [aggression_type != "Non-aggressive"] [set aggression_level random 49 + 50
       set aggression_type "Aggressive"]
-     ;set color (15 - (aggression_level / 30))] ;agressive turtles have a range of 51-100
 
-  ask agents2 [set color (108 + (aggression_level / 10))] ;not sure why this isn't working well -we need to fix it since it only works for predominant color
+  ask agents2 [set color scale-color blue aggression_level 100 0]
 end
 
 to create_food
@@ -160,10 +163,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-1117
-198
-1181
-231
+1043
+320
+1107
+353
 Setup
 setup
 NIL
@@ -184,8 +187,8 @@ SLIDER
 amount_of_food
 amount_of_food
 0
-100
-100.0
+500
+86.0
 1
 1
 NIL
@@ -193,14 +196,14 @@ HORIZONTAL
 
 SLIDER
 835
-89
-1033
-122
+87
+1008
+120
 percentage_of_aggressive
 percentage_of_aggressive
 0
 100
-60.0
+35.0
 1
 1
 NIL
@@ -226,10 +229,10 @@ PENS
 "non-aggressive" 1.0 0 -13345367 true "" "plot count turtles with [color = \"blue\"]"
 
 BUTTON
-1117
-159
-1180
-192
+1043
+281
+1106
+314
 Go
 go
 T
@@ -251,7 +254,7 @@ view_Distance
 view_Distance
 0
 10
-8.0
+2.0
 1
 1
 patches
@@ -284,22 +287,22 @@ value_of_food
 value_of_food
 0
 100
-100.0
+50.0
 1
 1
 energy
 HORIZONTAL
 
 SLIDER
-1191
-10
-1406
-43
+1012
+87
+1186
+120
 constant_energy_loss
 constant_energy_loss
 0
 50
-5.0
+3.0
 1
 1
 energy
@@ -647,7 +650,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.1.1
+NetLogo 6.2.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
