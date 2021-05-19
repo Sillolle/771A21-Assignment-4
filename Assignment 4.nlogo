@@ -67,6 +67,7 @@ to go
     set-current-plot-pen "default"
     plot count agents2
   ]
+  export-all-plots ("plots.csv") ;saves data for modelling dyns
 end
 
 to interact
