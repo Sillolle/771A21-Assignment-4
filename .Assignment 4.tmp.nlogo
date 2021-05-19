@@ -33,7 +33,7 @@ to create_agents
       set aggression_type "Aggressive"]
      ;set color (15 - (aggression_level / 30))] ;agressive turtles have a range of 51-100
 
-  ask agents2 [set color (108 + (aggression_level / 10))] ;not sure why this isn't working well -we need to fix it since it only works for predominant color
+  ask agents2 [set color (108 + (aggression_level / 10))] ;not sure why this isn't working well
 end
 
 to create_food
