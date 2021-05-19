@@ -116,7 +116,7 @@ to update-turtles
   ask agents2 [
     set energy energy - constant_energy_loss ; Remove 10 energy from every turtle
     if energy < 1 [ die ] ; Remove Turtles without energy
-    if energy > 100 [ set energy 50 hatch 1 ] ; Experimental breeding function, Do we want breeding?
+    if energy > 100 [ set energy 50 hatch 1 [ lt random 360 fd 1 ] ] ; Experimental breeding function, Do we want breeding?
   ]
 end
 @#$#@#$#@
@@ -188,7 +188,7 @@ amount_of_food
 amount_of_food
 0
 500
-86.0
+35.0
 1
 1
 NIL
@@ -203,7 +203,7 @@ percentage_of_aggressive
 percentage_of_aggressive
 0
 100
-35.0
+50.0
 1
 1
 NIL
@@ -254,7 +254,7 @@ view_Distance
 view_Distance
 0
 10
-2.0
+5.0
 1
 1
 patches
@@ -287,7 +287,7 @@ value_of_food
 value_of_food
 0
 100
-50.0
+91.0
 1
 1
 energy
@@ -301,8 +301,8 @@ SLIDER
 constant_energy_loss
 constant_energy_loss
 0
-50
-3.0
+10
+2.0
 1
 1
 energy
