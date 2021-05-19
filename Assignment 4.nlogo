@@ -89,7 +89,7 @@ to fight_or_flight ;Fight or flight function ;This should work because it steps 
   ask turtles-here [
     if aggression_level < random 100 [ lt random 360 fd 1 ] ; Checks if turtles flee, and if they flee, move them one patch away
   ]
-  if count turtles-here > 1 [ fight ] ; If more than 1 agent remain, have them fight
+  ifelse count turtles-here > 1 [ fight ] [ask one-of turtles-here [ eat count foods-here ] ] ; If more than 1 agent remain, have them fight, otherwise have any remaining turtle eat
 end
 
 to fight ; 1 / number_of_turtles-here chance of winning fight for every turtle
