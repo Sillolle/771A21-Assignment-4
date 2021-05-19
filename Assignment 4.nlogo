@@ -163,10 +163,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-1117
-198
-1181
-231
+1043
+320
+1107
+353
 Setup
 setup
 NIL
@@ -187,8 +187,8 @@ SLIDER
 amount_of_food
 amount_of_food
 0
-100
-100.0
+500
+86.0
 1
 1
 NIL
@@ -196,14 +196,14 @@ HORIZONTAL
 
 SLIDER
 835
-89
-1033
-122
+87
+1008
+120
 percentage_of_aggressive
 percentage_of_aggressive
 0
 100
-71.0
+35.0
 1
 1
 NIL
@@ -229,10 +229,10 @@ PENS
 "non-aggressive" 1.0 0 -13345367 true "" "plot count turtles with [color = \"blue\"]"
 
 BUTTON
-1117
-159
-1180
-192
+1043
+281
+1106
+314
 Go
 go
 T
@@ -294,10 +294,10 @@ energy
 HORIZONTAL
 
 SLIDER
-1191
-10
-1406
-43
+1012
+87
+1186
+120
 constant_energy_loss
 constant_energy_loss
 0
