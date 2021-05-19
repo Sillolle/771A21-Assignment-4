@@ -57,9 +57,9 @@ to go
   set-current-plot "Aggressive vs non-aggressive turtles"
   set-current-plot-pen "aggressive"
   if count agents2 > 0 [
-    plot (count agents2 with [color = red] / count agents2) * 100
+    plot (count agents2 with [aggression_type = "Aggressive"] / count agents2) * 100
     set-current-plot-pen "non-aggressive"
-    plot (count agents2 with [color = blue]  / count agents2) * 100
+    plot (count agents2 with [aggression_type = "Non-aggressive"]  / count agents2) * 100
     set-current-plot "Number of turtles"
     set-current-plot-pen "default"
     plot count agents2
@@ -81,7 +81,7 @@ to interact
 end
 
 to eat [n_of_foods]
-  set energy energy + n_of_foods * 10 ;(value_of_food) ; Adds the number of foods eaten * 10 to the turtles energy
+  set energy energy + n_of_foods * value_of_food ; Adds the number of foods eaten * 10 to the turtles energy
   ask foods-here [ die ] ; removes the foods from the patch
 end
 
@@ -111,7 +111,7 @@ end
 
 to update-turtles
   ask agents2 [
-    set energy energy - 1 ; Remove 10 energy from every turtle
+    set energy energy - constant_energy_loss ; Remove 10 energy from every turtle
     if energy < 1 [ die ] ; Remove Turtles without energy
     if energy > 100 [ set energy 50 hatch 1 ] ; Experimental breeding function, Do we want breeding?
   ]
@@ -243,18 +243,18 @@ NIL
 1
 
 SLIDER
-1013
+1012
 11
-1185
+1184
 44
 view_Distance
 view_Distance
 0
 10
-6.0
-2
+2.0
 1
-NIL
+1
+patches
 HORIZONTAL
 
 PLOT
@@ -274,6 +274,36 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" "plot count turtles"
+
+SLIDER
+1012
+49
+1185
+82
+value_of_food
+value_of_food
+0
+100
+50.0
+1
+1
+energy
+HORIZONTAL
+
+SLIDER
+1191
+10
+1406
+43
+constant_energy_loss
+constant_energy_loss
+0
+50
+3.0
+1
+1
+energy
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
