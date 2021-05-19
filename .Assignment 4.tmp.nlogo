@@ -33,7 +33,7 @@ to create_agents
       set aggression_type "Aggressive"]
      ;set color (15 - (aggression_level / 30))] ;agressive turtles have a range of 51-100
 
-  ask agents2 [set color (108 + (aggression_level / 10))] ;not sure why this isn't working well
+  ask agents2 [set color (108 + (aggression_level / 10))] ;not sure why this isn't working well -we need to fix it since it only works for predominant color
 end
 
 to create_food
@@ -64,6 +64,7 @@ to go
     set-current-plot-pen "default"
     plot count agents2
   ]
+  export-all-plots ("plots.csv")
 end
 
 to interact
@@ -200,7 +201,7 @@ percentage_of_aggressive
 percentage_of_aggressive
 0
 100
-60.0
+90.0
 1
 1
 NIL
