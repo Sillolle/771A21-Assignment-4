@@ -68,9 +68,9 @@ to go
     plot count agents2
   ]
   if count agents2 with [aggression_type = "Aggressive"] < 1 [ stop]
-  if count agents2 with [aggression_type = "Non-Aggressive"] < 1 [ stop]
+  if count agents2 with [aggression_type = "Non-aggressive"] < 1 [ stop]
   if ticks > 3000 [ stop ]
-  export-all-plots ("plots.csv") ;saves data for modelling dyns
+  ;export-all-plots ("plots.csv") ;saves data for modelling dyns
   tick
 end
 
