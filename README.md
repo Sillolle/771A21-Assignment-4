@@ -16,6 +16,8 @@ In this case, geeting involved in a fight is particularly risky to the agents, s
 
 It might also be interesting to include desperation for food/energy in this model by basing likelihood of fighting for food on both the aggression level as well as the current energy level of the turtle. It is likely that agents which are more hungry will be more likely to fight than flee in the presence of food.
 
+It is also unlikely that when breeding occurs, the offspring is exactly the same as/a clone of the parent. For this reason when breeding occurs one could randomise how aggressive the child is when compared to the parent. This addition would also make the reproduction process more realistic.
+
 If one were to think of agents as less individualistic, one could consider food claimed by one individual as an acquisition for all members of their clan. In this extension, fights would only ensue between agents from different clans. Emergent group dynamics, cooperation and attribute diversity within the clans could then be potentailly studied.
 
 # Credits
