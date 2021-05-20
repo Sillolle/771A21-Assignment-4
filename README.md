@@ -1,2 +1,16 @@
 # 771A21-Assignment-4
 Repository for assignment 4
+
+# Project Description
+We started off with the question- How do differences in aggressive behavioral traits influence the survival rates of agents in a limited geographic area, where agents have to fight over resources in order to survive?. Based on this we built a model where agents move freely around their universe claiming food whenever it is freely available and deciding whether to fight for the food or flee in the case that other agents are also present on the patch. Food provides the agents with energy but getting involved in fights and not winning leads to the agents dying (here assuming a particularly violent fight situation). Once agents reach full energy (100%), they will spawn a clone of themselves and divide their energy in half. Agents also have the ability to detect whether there is food within a certain radius (defined by a slider). Once food is detected, the turtles will always choose to move towards it in an attempt to claim it.  
+
+One of the main aims of this work is to see which strategies work in which environments, by tweaking variables such as: the amount of energy provided by each piece of food, the amount of food available in the area, distance over which the agent has the ability to detect food as well as the starting proportions of agressive and non-aggressive agents.   
+
+# Installations
+This project was developed under Netlogo version 6.2.0. Netlogo is required to run the simulations. 
+
+# Experiments, outcomes and potential future extensions
+In this case, geeting involved in a fight is particularly risky to the individuals, since every fight they get into will either lead to them obtaining food, but equally as likely them dying. A potential extension to this model would be to have the turtles live on after getting involved in a fight but potentially losing a substantial amount of energy (or maybe a new health variable which could be related to reproduction rates). 
+
+# Credits
+This project was submitted by Abigail Galea, Oskar Johansson, Gabriel Lindelöf, Ivan Roijals and Anton Rosén as an assignment for a class in Agent Based Modelling at Linköping University. 
