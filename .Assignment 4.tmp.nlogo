@@ -107,7 +107,7 @@ to interact_with_print
     set foods-present count foods-here ; Count the number of foods on the patch
     if foods-present > 0[ ; Check if there is food on this turtles patch
       ifelse count agents2-here > 1[  ; Check if there is atleast another turtle on this patch
-        print word "Interaction happening at: " patch-here
+        print (word "Interaction happening at: " patch-here " with " agents2-here)
         fight_or_flight_with_print ; Fight other turtle (will only initiate if another turtle is present)
         stop
       ]
@@ -128,7 +128,7 @@ to fight_or_flight ;Fight or flight function ;This should work because it steps 
   ask agents2-here [
     if aggression_level < random 100 [ lt random 360 fd 1 ] ; Checks if turtles flee, and if they flee, move them one patch away
   ]
-  ifelse count agents2-here > 1 [ fight ] [ask one-of -here [ eat count foods-here ] ] ; If more than 1 agent remain, have them fight, otherwise have any remaining turtle eat
+  ifelse count agents2-here > 1 [ fight ] [ask one-of agents2-here [ eat count foods-here ] ] ; If more than 1 agent remain, have them fight, otherwise have any remaining turtle eat
 end
 
 to fight_or_flight_with_print ;Fight or flight function ;This should work because it steps one turtle at a time, so this will happen once, not twice if two turtles are present
@@ -146,7 +146,7 @@ to fight ; 1 / number_of_turtles-here chance of winning fight for every turtle
   let agents_to_die count agents2-here - 1 ; set the number of turtles that will die in the fight
   ask n-of agents_to_die agents2-here [die] ; kill all but one turtle
   ask one-of agents2-here [eat count foods-here] ; let the remaining turtle eat
-  print word agents2-here " Is the survivor"
+
 end
 
 to face-turtle
@@ -173,8 +173,8 @@ end
 to update-turtles_with_print
   ask agents2 [
     set energy energy - constant_energy_loss ; Remove 10 energy from every turtle
-    if energy < 1 [ die ] ; Remove Turtles without energy
-    if energy > 100 [ set energy 50 hatch 1 [ lt random 360 fd 1 ] ] ; Experimental breeding function, Do we want breeding?
+    if energy < 1 [ die print word self " dies" ] ; Remove Turtles without energy
+    if energy > 100 [ set energy 50 hatch 1 [ lt random 360 fd 1 print word self "hatches" ] ] ; Experimental breeding function, Do we want breeding?
   ]
 end
 @#$#@#$#@
@@ -261,7 +261,7 @@ percentage_of_aggressive
 percentage_of_aggressive
 0
 100
-75.0
+25.0
 1
 1
 NIL
@@ -312,7 +312,7 @@ view_Distance
 view_Distance
 0
 10
-6.0
+4.0
 1
 1
 patches
@@ -345,7 +345,7 @@ value_of_food
 value_of_food
 0
 100
-100.0
+20.0
 1
 1
 energy
@@ -360,7 +360,7 @@ constant_energy_loss
 constant_energy_loss
 0
 10
-3.0
+1.0
 1
 1
 energy
@@ -730,7 +730,7 @@ NetLogo 6.2.0
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="experiment" repetitions="8" runMetricsEveryStep="false">
+  <experiment name="experiment" repetitions="1" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <metric>count turtles with [ aggression_type = "Aggressive" ]</metric>
