@@ -146,7 +146,6 @@ to fight ; 1 / number_of_turtles-here chance of winning fight for every turtle
   let agents_to_die count agents2-here - 1 ; set the number of turtles that will die in the fight
   ask n-of agents_to_die agents2-here [die] ; kill all but one turtle
   ask one-of agents2-here [eat count foods-here] ; let the remaining turtle eat
-
 end
 
 to face-turtle
@@ -246,7 +245,7 @@ amount_of_food
 amount_of_food
 0
 500
-180.0
+90.0
 1
 1
 NIL
@@ -261,7 +260,7 @@ percentage_of_aggressive
 percentage_of_aggressive
 0
 100
-25.0
+75.0
 1
 1
 NIL
@@ -312,7 +311,7 @@ view_Distance
 view_Distance
 0
 10
-4.0
+6.0
 1
 1
 patches
@@ -345,7 +344,7 @@ value_of_food
 value_of_food
 0
 100
-20.0
+100.0
 1
 1
 energy
@@ -360,7 +359,7 @@ constant_energy_loss
 constant_energy_loss
 0
 10
-1.0
+3.0
 1
 1
 energy
@@ -730,7 +729,7 @@ NetLogo 6.2.0
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="experiment" repetitions="1" runMetricsEveryStep="false">
+  <experiment name="experiment" repetitions="5" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <metric>count turtles with [ aggression_type = "Aggressive" ]</metric>
@@ -744,9 +743,7 @@ NetLogo 6.2.0
       <value value="100"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="percentage_of_aggressive">
-      <value value="25"/>
       <value value="50"/>
-      <value value="75"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="view_Distance">
       <value value="2"/>
