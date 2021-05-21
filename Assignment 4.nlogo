@@ -11,7 +11,7 @@ turtles-own[
 
 patches-own[]
 
-to setup
+to setup ; Initialise the environment and create initial turtles and food
   ca
   reset-ticks
   recolor_bk
@@ -19,11 +19,11 @@ to setup
   create_food
 end
 
-to recolor_bk
+to recolor_bk ; Set the background color of the environment
   ask patches [set pcolor 44]
 end
 
-to create_agents
+to create_agents ; spawn the aggresive and non-aggresive turtles
   ask n-of number_of_agents patches [sprout 1]
   ask turtles [set breed agents2
                set shape "turtle"
@@ -39,7 +39,7 @@ to create_agents
   ask agents2 [set color scale-color blue aggression_level 100 0]
 end
 
-to create_food
+to create_food ; make sure that the amount of food in the environment is amount_of_food
   let food_required (amount_of_food - count foods)
   ask n-of food_required patches with [(not any? other turtles-here)] [sprout-foods 1] ;patches without turtles currently on them sprout food
   ask foods [set shape "circle"
@@ -47,7 +47,7 @@ to create_food
 
 end
 
-to go
+to go ; Run the model
   ask agents2[
     face-turtle
     fd 1
@@ -75,7 +75,7 @@ to go
 end
 
 
-to go_once
+to go_once ; step through 1 tick of the model and print information from interactions and death/hatching
   ask agents2[
     face-turtle
     fd 1
@@ -87,7 +87,7 @@ to go_once
   tick
 end
 
-to interact
+to interact ; start the interaction process in spaces with food and more than 1 turtle
   let foods-present 0 ; Number of foods on the current patch
   ask agents2[
     set foods-present count foods-here ; Count the number of foods on the patch
@@ -107,7 +107,8 @@ to interact_with_print
     set foods-present count foods-here ; Count the number of foods on the patch
     if foods-present > 0[ ; Check if there is food on this turtles patch
       ifelse count agents2-here > 1[  ; Check if there is atleast another turtle on this patch
-        print (word "Interaction happening at: " patch-here " with " agents2-here)
+        print "------------------"
+        print (word "Interaction happening at: " patch-here " with " count agents2-here " Turtles involved ")
         fight_or_flight_with_print ; Fight other turtle (will only initiate if another turtle is present)
         stop
       ]
@@ -119,7 +120,7 @@ to interact_with_print
   stop
 end
 
-to eat [n_of_foods]
+to eat [n_of_foods] ; eat all the food on the patch , gain food * value_of_food energy
   set energy energy + n_of_foods * value_of_food ; Adds the number of foods eaten * 10 to the turtles energy
   ask foods-here [ die ] ; removes the foods from the patch
 end
@@ -139,16 +140,28 @@ to fight_or_flight_with_print ;Fight or flight function ;This should work becaus
     print ( word "Aggresion: " aggression_level " " "Random number: " randomvar)
     if aggression_level < randomvar [ lt random 360 fd 1 ] ; Checks if turtles flee, and if they flee, move them one patch away
   ]
-  ifelse count agents2-here > 1 [ fight print "fight happening" ] [ask one-of agents2-here [ eat count foods-here ] ] ; If more than 1 agent remain, have them fight, otherwise have any remaining turtle eat
+  ifelse count agents2-here > 1 [ print "fight happening" fight_with_print ] [ask one-of agents2-here [ eat count foods-here ] ] ; If more than 1 agent remain, have them fight, otherwise have any remaining turtle eat
 end
 
+
+
+; THERE WAS AN ERROR HERE DURING PRESENTATION:
+; The model we present in the presentation had agents_to_die count being set by turtles-here instead of agents2-here, meaning that a patch with 1 food and 3 turtles would kill all 3 turtles (4-1) instead of the intended 2.
+; This would have caused the all the turtles to die in a fight, making the aggresive strategy significantly worse, when this was fixed, the aggresive strategy was significantly better
 to fight ; 1 / number_of_turtles-here chance of winning fight for every turtle
   let agents_to_die count agents2-here - 1 ; set the number of turtles that will die in the fight
   ask n-of agents_to_die agents2-here [die] ; kill all but one turtle
   ask one-of agents2-here [eat count foods-here] ; let the remaining turtle eat
 end
 
-to face-turtle
+to fight_with_print ; 1 / number_of_turtles-here chance of winning fight for every turtle
+  let agents_to_die count agents2-here - 1 ; set the number of turtles that will die in the fight
+  ask n-of agents_to_die agents2-here [die] ; kill all but one turtle
+  ask one-of agents2-here [eat count foods-here] ; let the remaining turtle eat
+  print word "Survivor" one-of agents2-here
+end
+
+to face-turtle ; check for food in a radius expanding from 0 to view_Distance, stopping and facing when a food is found
   let sight 0
   if count foods-here < 1 [
     while [sight <= view_Distance] [
@@ -161,7 +174,7 @@ to face-turtle
   lt random 360
 end
 
-to update-turtles
+to update-turtles ; Update turtles with their new energy, kill turtles with energy < 1 and hatch from turtles with energy > 100
   ask agents2 [
     set energy energy - constant_energy_loss ; Remove x energy from every turtle
     if energy < 1 [ die ] ; Remove Turtles without energy
@@ -170,6 +183,7 @@ to update-turtles
 end
 
 to update-turtles_with_print
+  print "--------------"
   ask agents2 [
     set energy energy - constant_energy_loss ; Remove 10 energy from every turtle
     if energy < 1 [ die print word self " dies" ] ; Remove Turtles without energy
@@ -260,7 +274,7 @@ percentage_of_aggressive
 percentage_of_aggressive
 0
 100
-25.0
+50.0
 1
 1
 NIL
@@ -311,7 +325,7 @@ view_Distance
 view_Distance
 0
 10
-4.0
+6.0
 1
 1
 patches
@@ -344,7 +358,7 @@ value_of_food
 value_of_food
 0
 100
-20.0
+100.0
 1
 1
 energy
@@ -359,7 +373,7 @@ constant_energy_loss
 constant_energy_loss
 0
 10
-1.0
+3.0
 1
 1
 energy
@@ -729,7 +743,7 @@ NetLogo 6.2.0
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="experiment" repetitions="1" runMetricsEveryStep="false">
+  <experiment name="experiment" repetitions="5" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <metric>count turtles with [ aggression_type = "Aggressive" ]</metric>
@@ -743,9 +757,7 @@ NetLogo 6.2.0
       <value value="100"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="percentage_of_aggressive">
-      <value value="25"/>
       <value value="50"/>
-      <value value="75"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="view_Distance">
       <value value="2"/>
