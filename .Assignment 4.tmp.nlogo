@@ -128,7 +128,7 @@ to fight_or_flight ;Fight or flight function ;This should work because it steps 
   ask agents2-here [
     if aggression_level < random 100 [ lt random 360 fd 1 ] ; Checks if turtles flee, and if they flee, move them one patch away
   ]
-  ifelse count agents2-here > 1 [ fight ] [ask one-of agents2-here [ eat count foods-here ] ] ; If more than 1 agent remain, have them fight, otherwise have any remaining turtle eat
+  ifelse count agents2-here > 1 [ fight ] [ask one-of -here [ eat count foods-here ] ] ; If more than 1 agent remain, have them fight, otherwise have any remaining turtle eat
 end
 
 to fight_or_flight_with_print ;Fight or flight function ;This should work because it steps one turtle at a time, so this will happen once, not twice if two turtles are present
